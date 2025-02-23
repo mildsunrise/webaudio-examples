@@ -8,6 +8,9 @@ const stop = document.getElementById("stop");
 const playbackControl = document.getElementById("playback-rate-control");
 const playbackValue = document.getElementById("playback-rate-value");
 
+const detuneControl = document.getElementById("detune-control");
+const detuneValue = document.getElementById("detune-value");
+
 async function loadAudio() {
   try {
     // Load an audio file
@@ -29,10 +32,12 @@ play.addEventListener("click", async () => {
   source.connect(audioCtx.destination);
   source.loop = true;
   source.playbackRate.value = playbackControl.value;
+  source.detune.value = detuneControl.value;
   source.start();
   play.disabled = true;
   stop.disabled = false;
   playbackControl.disabled = false;
+  detuneControl.disabled = false;
 });
 
 stop.addEventListener("click", () => {
@@ -40,9 +45,15 @@ stop.addEventListener("click", () => {
   play.disabled = false;
   stop.disabled = true;
   playbackControl.disabled = true;
+  detuneControl.disabled = true;
 });
 
 playbackControl.oninput = () => {
   source.playbackRate.value = playbackControl.value;
   playbackValue.textContent = playbackControl.value;
+};
+
+detuneControl.oninput = () => {
+  source.detune.value = detuneControl.value;
+  detuneValue.textContent = detuneControl.value;
 };
